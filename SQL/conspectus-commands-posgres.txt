@@ -10,7 +10,8 @@
 | 02.00	   |  CREATE DATABASE Test;                               | Crate new DataBase with name: {Test},                           |
 |          |                                                      | (; <- only with this shell understands that we write a command) |
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
-| 03.00(t) |  sudo -u postgres psql -> \password postgres 	      | Changes password to user: {postgres}						    |
+| 03.00(t) |  sudo -u postgres psql -> \password postgres 	      | Changes password to user:{postgres}                             |
+|          |                                                      | !!!IT HELPS TO CONNECT SUBLIME SQLTools!!!                      |
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
 | 03.01(t) |  psql -h localhost -p 5432 -U postgres test	      | Open DataBase with name: {test}								    |
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
@@ -32,9 +33,31 @@
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
 | 05.02    |  \d Name                                             | Display table in that DateBase, with name: {Name}               |
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
-
+| 06.00    | INSERT INTO person (                                 | Insert values: {VALUES} where each one value connects to        |
+|    	   |	first_name,                                       | each one column name. Insert to: {INTO}                         |
+|    	   |	last_name,                                        | table with name: {person}                                       |
+|   	   |	gender,                                           |																	|
+|    	   |	date_of_birth,                                    |																	|
+|    	   |	email)                                            |																	|
+|		   | VALUES ('Jakob', 'Wager', 'MALE',                    |																	|
+|		   | 					'1991-01-01', 'jak@jajaK.com');   |																	|
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
-
+| 07.00    | \dt 												  | Shows jsut Tables                                               |
+|----------|------------------------------------------------------|-----------------------------------------------------------------|
+| 08.00    | \i path_to_file {~/Документы/SQL/test-query-3.sql}   | Execute that query                                              |
+|----------|------------------------------------------------------|-----------------------------------------------------------------|
+| 08.01    | SELECT * FROM person;                                | Select:{SELECT} all: {*} COLLUMNS to output them on terminal,   |
+|          | SELECT {collumns} from {some table_name};            | or just show, from table: {person}                              |
+|----------|------------------------------------------------------|-----------------------------------------------------------------|
+| 09.00    | ASC                                                  | Ascending order 1 2 3 4 5                                       |
+|----------|------------------------------------------------------|-----------------------------------------------------------------|
+| 09.01    | DESC                                                 | Discending order 5 4 3 2 1                                      |
+|----------|------------------------------------------------------|-----------------------------------------------------------------|
+| 09.02    | SELECT * FROM person                                 | We are choosing our data sorted by ASC, by country of birth:    |
+|          |		ORDER BY country_of_birth ASC;                | {ORDER BY country_of_birth ASC} - change order of sellection    |
+|----------|------------------------------------------------------|-----------------------------------------------------------------|
+| 10.00    | SELECT DISTINCT country_of_birth                     | word: {DISTINCT} helps to select only unique values from        |
+|          |     FROM person ORDER BY country_of_birth;           | collumn: {country_of_birth}                                     |
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
 
 |----------|------------------------------------------------------|-----------------------------------------------------------------|
