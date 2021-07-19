@@ -1,9 +1,11 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
 int main(){
-
-    cout << "Bitch!" << endl;
+    int x = 0;
+    cout << "Bitch!" << x << endl;
 
     return 0;
 }
