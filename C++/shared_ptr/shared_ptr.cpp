@@ -1,4 +1,6 @@
 #include <iostream>
+#include <memory>
+#include <vector>
 
 using namespace std;
 
@@ -59,18 +61,15 @@ void MakeSound(const Animal& a) {
 }
 
 int main() {
-    Cat c;
-    Dog d;
+    vector<shared_ptr<Animal>> animals = {
+        make_shared<Cat>(),
+        make_shared<Dog>(),
+        make_shared<Parrot>("Kesha"),
+    };
 
-    Horse h;
-
-    Parrot p("Kesha");
-
-
-    MakeSound(c);
-    MakeSound(d);
-    MakeSound(p);
-    MakeSound(h);
+    for (auto a : animals) {
+        MakeSound(*a);
+    }
 
     return 0;
 }
