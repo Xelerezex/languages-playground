@@ -4,7 +4,7 @@
 #include <vector>
 
 int main() {
-    std::vector<double> z = {1, 2, 3, 4};
+    std::vector<int> z = {1, 2, 3, 4};
 
     std::cout << typeid(z.begin()).name() << std::endl;
 
