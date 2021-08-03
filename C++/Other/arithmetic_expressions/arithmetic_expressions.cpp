@@ -47,6 +47,15 @@ struct Op : public Node {
         } ()),
     _op(value) {}
 
+/*  В чатике сказали побаловаться. IILE - ? IIFE - ?
+    #include <iostream>
+
+    auto printer = [] {std::cout << "Ole ole ole\n"; return 0; }();
+
+    int main() {
+    }
+*/
+
     const uint8_t precedence;
 
     int Evaluate() const override {
