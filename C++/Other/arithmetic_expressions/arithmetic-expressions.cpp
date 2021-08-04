@@ -7,30 +7,39 @@
 
 using namespace std;
 
+#include "container_cout.h"
 // Внимание!
 // Для простоты разбора будем использовать только числа из одной цифры,
 // а также не будет скобок, пробелов и ненужных символов.
 // При этом, будем считать, что выражение всегда корректно.
 
 struct Node {
-    virtual int Evaluate() const = 0;
+    public:
+        virtual int Evaluate() const = 0;
+        virtual int Get() const = 0;
 };
 
 
 struct Value : public Node {
-    Value(char digit) : _value(digit - '0') {}
+    public:
+        Value(char digit) : _value(digit - '0') {}
 
-    int Evaluate() const override { return _value; }
+        int Evaluate() const override { return _value; }
 
-private:
-    const uint8_t _value;
+        int Get() const override { return _value; }
+
+    private:
+        const uint8_t _value;
 };
 
 
 struct Variable : public Node {
+    public:
         Variable(const int &x) : _x(x) {}
 
         int Evaluate() const override { return _x; }
+
+        int Get() const override { return _x; }
 
     private:
         const int &_x;
@@ -47,16 +56,7 @@ struct Op : public Node {
         } ()),
     _op(value) {}
 
-/*  В чатике сказали побаловаться. IILE - ? IIFE - ?
-    #include <iostream>
-
-    auto printer = [] {std::cout << "Ole ole ole\n"; return 0; }();
-
-    int main() {
-    }
-*/
-
-    const uint8_t precedence;
+    const uint8_t precedence;      // Priority
 
     int Evaluate() const override {
         if (_op == '*') {
@@ -70,8 +70,15 @@ struct Op : public Node {
         return 0;
     }
 
-    void SetLeft(shared_ptr<Node> node) { _left = node; }
-    void SetRight(shared_ptr<Node> node) { _right = node; }
+    int Get() const override { return _op; }
+
+    void SetLeft(shared_ptr<Node> node) {
+        _left = node;
+    }
+    void SetRight(shared_ptr<Node> node) {
+        _right = node;
+    }
+
 
 private:
     const char _op;
@@ -89,25 +96,42 @@ shared_ptr<Node> Parse(Iterator token, Iterator end, const int &x) {
     stack<shared_ptr<Node>> values;
     stack<shared_ptr<Op>> ops;
 
-    auto PopOps = [&](int precedence) {
+    auto PopOps = [&](int precedence)  {
 
     while (!ops.empty() && ops.top()->precedence >= precedence) {
+
+
+        cout << "stack change 1.1: " << values << endl;
         auto value1 = values.top();
         values.pop();
+        cout << "stack change 1.2: " << values << endl << endl;
+
+
+        cout << "stack change 2.1: " << values << endl;
         auto value2 = values.top();
         values.pop();
+        cout << "stack change 2.1: " << values << endl << endl;
+
+
+        cout << "stack change 3.1: " << ops << endl;
         auto op = ops.top();
         ops.pop();
+        cout << "stack change 3.2: " << ops << endl << "----------------------------------------" << endl;
+
 
         op->SetRight(value1);
         op->SetLeft(value2);
+
 
         values.push(op);
         }
     };
 
+
     while (token != end) {
         const auto &value = *token;
+        cout << "(val)\t: " << value << endl;
+
 
         if (value >= '0' && value <= '9') {
             values.push(make_shared<Value>(value));
@@ -121,6 +145,7 @@ shared_ptr<Node> Parse(Iterator token, Iterator end, const int &x) {
             ops.push(make_shared<Op>(value));
         }
 
+
         ++token;
     }
 
@@ -133,17 +158,20 @@ shared_ptr<Node> Parse(Iterator token, Iterator end, const int &x) {
 
 int main() {
     string tokens;
-    cout << "Enter expression: ";
-    getline(cin, tokens);
+    cout << "Enter expression: \n";
+    //getline(cin, tokens);
+    tokens = "1+2";
 
     int x = 0;
     auto node = Parse(tokens.begin(), tokens.end(), x);
 
-    cout << "Enter x: ";
+    //cout << "Expression value: " << node->Evaluate() << endl;
+
+    /*cout << "Enter x: ";
     while (cin >> x) {
-    cout << "Expression value: " << node->Evaluate() << endl;
-    cout << "Enter x: ";
-    }
+        cout << "Expression value: " << node->Evaluate() << endl;
+        cout << "Enter x: ";
+    }*/
 
     return 0;
 }
