@@ -1,45 +1,43 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-
-#include "container_cout.h"
+#include <stack>
 
 
 using namespace std;
 
-int makeOperation(int& left, int& right, char& oper) {
-    if (oper == '+') {
-        return left + right;
-    } else if (oper == '-') {
-        return left - right;
-    }
-    return 0;
-}
+class Operation {
+    public:
+        Operation(const char& op) : operation(op) {}
+
+        int Evaluate() const {
+            if (operation == '+') {
+                return left + right;
+            } else {
+                return 0;
+            }
+        }
+
+        void SetLeft(const int& l) {
+            left = l;
+        }
+
+        void SetRight(const int& r) {
+            right = r;
+        }
+
+    private:
+        const char operation;
+        int left, right;
+};
 
 int main() {
+    Operation op('+');
+    op.SetLeft(1);
+    op.SetRight(2);
+    int res = op.Evaluate();
 
-    string token = "1+2+3+4+5+0+9";
-
-    stack<int> numbers;
-    stack<char> operations;
-
-
-    for (const auto& item : token) {
-        if (item >= '0' or '9' <= item) {
-            int z = item - '0';
-            numbers.push(static_cast<int>(z));
-        } else if (item == '+' || item == '-') {
-            operations.push(item);
-        }
-    }
-
-
-
-
-
-    cout << "numbers stack     :  " <<  numbers     << endl;
-    cout << "operations stack  :  " <<  operations  << endl;
+    cout << res << endl;
 
     return 0;
 }

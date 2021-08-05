@@ -89,10 +89,10 @@ std::ostream& operator << (std::ostream& os, const std::pair <F, S>& fs) {
 //-------------FOR-STACK
 template <class T>
 std::ostream& operator << (std::ostream& os, const std::stack <T>& s) {
-    std::stack t = s;
+    std::stack<T> t = s;
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--------------------EVALUATE
     while (!t.empty()) {
-        os << t.top()/*->Get()*/ << ' ';
+        os << t.top()->Get() << ' ';
         t.pop();
     }
     return os << "";

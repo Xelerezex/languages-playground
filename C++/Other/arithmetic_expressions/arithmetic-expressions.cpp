@@ -160,12 +160,14 @@ int main() {
     string tokens;
     cout << "Enter expression: \n";
     //getline(cin, tokens);
-    tokens = "1+2";
+    tokens = "1+2*4+5";
 
     int x = 0;
     auto node = Parse(tokens.begin(), tokens.end(), x);
 
-    //cout << "Expression value: " << node->Evaluate() << endl;
+    cout << node << endl;
+
+    cout << "Expression value: " << node->Evaluate() << endl;
 
     /*cout << "Enter x: ";
     while (cin >> x) {
