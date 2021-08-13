@@ -10,7 +10,7 @@ std::ostream& operator << (std::ostream& os, const std::vector <L>& l);
 int main() {
 
     vector<int> vec1 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    vector<int> vec2 = {1, 0, 3, 4, 5, 5, 7, 8, 9};
+    vector<int> vec2 = {1, 0, 3, 0, 5, 0, 7, 8, 9};
 
     cout << vec1 << endl;
     cout << vec2 << endl;
@@ -22,15 +22,13 @@ int main() {
         return numb == 0;
     });
 
-    vec2.erase(vec2.begin(), (vec2.begin()+1));
+    cout << vec2 << " : " << *it << endl;
+    vec2.erase(vec2.begin(), it);
 
     cout << "------------------------------------" << endl;
     cout << vec1 <<"\t" << ((*it0 /*== (vec1.end() - 1) */)/* ? "true" : "false"*/) << endl;
     cout << vec2 << "\t" <<*it << endl;
 
-    vec2.push_back(666);
-
-    cout << vec2 << endl;
 
     return 0;
 }

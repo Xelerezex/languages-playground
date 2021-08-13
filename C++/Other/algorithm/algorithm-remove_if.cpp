@@ -45,26 +45,3 @@ int main () {
 
 
 }
-
-/*
-
-        auto data   = (iter->first);
-        auto events = (iter->second);
-        size_t old_events_qua = events.size();
-
-        if (events.size() < 2) {
-            iter = DataBaseStorage.erase(iter);
-
-            number_out += 1;
-        } else {
-            auto new_end = remove_if(events.begin(), events.end(), [data, func](string event){
-                return func(data, event);
-            });
-
-            events.erase(new_end, events.end());
-
-            number_out += (old_events_qua - events.size());
-
-            ++iter;
-        }
-*/
