@@ -1,10 +1,47 @@
 #include "profile.h"
 #include "test_runner.h"
-
+//-----------------------------------------------------------------------------------//
 template<typename T>
 std::vector<T> generate_data(size_t size,
                                   T min = std::numeric_limits<T>::min(),
                                   T max =std::numeric_limits<T>::max());
+template<typename S>
+void Swap(S &first, S &second);
+
+template<typename P>
+int partition(vector<P> &array, int &start, int &end);
+
+template<typename P>
+P rand_partition(vector<P> &array, P &start, P &end);
+
+template<typename T>
+void quicksort_rand(vector<T> &array, int start, int end);
+
+template<typename T>
+void quicksort(vector<T> &array, int start, int end);
+
+template <typename T>
+void SortContainer(vector<T*>& pointers, bool FLAG);
+//-----------------------------------------------------------------------------------//
+
+template<typename P>
+P rand_partition(vector<P> &array, P &start, P &end) {
+    //chooses position of pivot randomly by using rand() function .
+    int random = start + rand( ) % (end - start + 1) ;
+
+    Swap(array[random] , array[start]);        //swap pivot with 1st element.
+    return partition(array, start ,end);       //call the above partition function
+}
+
+template<typename T>
+void quicksort_rand(vector<T> &array, int start, int end) {
+    if (start < end) {
+        int pivot = partition(array, start, end);
+        quicksort_rand(array, start, (pivot - 1));
+        quicksort_rand(array, (pivot + 1), end);
+    }
+}
+
 template<typename S>
 void Swap(S &first, S &second) {
     S temp = first;
@@ -13,11 +50,11 @@ void Swap(S &first, S &second) {
 }
 
 template<typename P>
-P partition(vector<P> &array, P &start, P &end) {
+int partition(vector<P> &array, int &start, int &end) {
     int iteration = start + 1; //next element after start
-    int pivot = array[start];
+    P pivot = array[start];
 
-    for (P it = iteration; it <= end; ++it){
+    for (int it = iteration; it <= end; ++it){
         if (array[it] < pivot) {
             Swap(array[iteration], array[it]);
             ++iteration;
@@ -28,38 +65,28 @@ P partition(vector<P> &array, P &start, P &end) {
 
     return iteration - 1;
 }
-template<typename P>
-P rand_partition(vector<P> &array, P &start, P &end) {
-    //chooses position of pivot randomly by using rand() function .
-    int random = start + rand( ) % (end - start + 1) ;
-
-    swap (array[random] , array[start]);        //swap pivot with 1st element.
-    return partition(array, start ,end);       //call the above partition function
-}
 
 template<typename T>
-void quick_sort_tval(vector<T> &array, T start, T end, bool FLAG) {
-    if (FLAG){
-        if (start < end) {
-            T pivot = rand_partition(array, start, end);
-            quick_sort_tval(array, start, (pivot - 1), FLAG);
-            quick_sort_tval(array, (pivot + 1), end, FLAG);
-        }
-    } else {
-        if (start < end) {
-            T pivot = partition(array, start, end);
-            quick_sort_tval(array, start, (pivot - 1), FLAG);
-            quick_sort_tval(array, (pivot + 1), end, FLAG);
-        }
+void quicksort(vector<T> &array, int start, int end) {
+    if (start < end) {
+        int pivot = partition(array, start, end);
+        quicksort(array, start, (pivot - 1));
+        quicksort(array, (pivot + 1), end);
     }
-
 }
 
-template<typename T>
-void quicksort(vector<T> &array, bool FLAG) {
-    int first = 0,
-        last  = array.size() - 1;
-    quick_sort_tval(array, first, last, FLAG);
+
+template <typename T>
+void SortContainer(vector<T>& container, bool FLAG) {
+    if (!FLAG){
+        int first = 0,
+            last  = container.size() - 1;
+        quicksort(container, first, last);
+    } else {
+        int first = 0,
+            last  = container.size() - 1;
+        quicksort_rand(container, first, last);
+    }
 }
 
 int main() {
@@ -71,7 +98,7 @@ int main() {
 
         {
             LOG_DURATION("Quicksort (random partial) of 100'000'000");
-            quicksort(RandomVector, true);
+            SortContainer(RandomVector, true);
         }
 
         ASSERT_EQUAL(RandomVector, RandomSortedVector);
@@ -84,7 +111,7 @@ int main() {
 
         {
             LOG_DURATION("Quicksort (first element partial) of 100'000'000");
-            quicksort(RandomVector, false);                         // Quicksort (first element partial) of 100'000: 14790 ms
+            SortContainer(RandomVector, false);                         // Quicksort (first element partial) of 100'000: 14790 ms
         }
 
         ASSERT_EQUAL(RandomVector, RandomSortedVector);
