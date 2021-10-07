@@ -33,26 +33,28 @@ void Swap(S &first, S &second) {
 
 
 template<typename P>
-int partition(vector<P> &array, int &start, int &end) {
-    int iteration = start + 1; //next element after start
-    P pivot = array[start];
+int partition(vector<P> &array, int &start, int &end) {                // [4, 1, 5, 2, 7, 9, 8]
+    int iteration = start + 1; //next element after start              //  ^  ^
+    P pivot = array[start];                                            //  P
 
-    for (int it = iteration; it <= end; ++it){
-        if (array[it] < pivot) {
-            Swap(array[iteration], array[it]);
-            ++iteration;
-        }
-    }
-
-    Swap(array[start], array[iteration - 1]);
-
-    return iteration - 1;
-}
-
-
-template<typename T>
-void quicksort(vector<T> &array, int start, int end) {
-    if (start < end) {
+    for (int it = iteration; it <= end; ++it){                         // 1 [1, 5, 2, 7, 2, 8]
+        if (array[it] < pivot) {                                       //    ^it & iteration
+            Swap(array[iteration], array[it]);                         // 2 [1, 5, 2, 7, 2, 8]
+            ++iteration;                                               //    ^  ^it
+        }                                                              // 3 [5, 1, 2, 7, 2, 8]
+    }                                                                  //       ^it & iteration
+                                                                       // 4 [5, 1, 2, 7, 2, 8]
+    Swap(array[start], array[iteration - 1]);                          //       ^  ^it
+                                                                       // 5 [5, 1, 2, 7, 2, 8]
+    return iteration - 1;                                              //       ^     ^it
+                                                                       // 4 [5, 7, 2, 1, 2, 8]
+}                                                                      //       ^     ^it
+                                                                       // 6 [5, 7, 2, 1, 2, 8]
+                                                                       //          ^     ^it
+                                                                       // 7 [5, 7, 2, 1, 2, 8]
+template<typename T>                                                   //          ^        ^it
+void quicksort(vector<T> &array, int start, int end) {                 // 8 [5, 7, 8, 1, 2, 2]
+    if (start < end) {                                                 // 9 [7, 5, 8, 1, 2, 2]  Swap(array[start], array[iteration - 1]);
         int pivot = partition(array, start, end);
         quicksort(array, start, (pivot - 1));
         quicksort(array, (pivot + 1), end);
