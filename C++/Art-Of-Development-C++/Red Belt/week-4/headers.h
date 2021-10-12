@@ -1,13 +1,14 @@
 #pragma once
 
 //-----------------DATA-TYPES
+#include <utility>
+#include <vector>
 #include <string>
+#include <queue>
+#include <deque>
+#include <array>
 #include <set>
 #include <map>
-#include <vector>
-#include <deque>
-#include <utility>
-#include <queue>
 
 //-----------------MATH
 #include <cmath>
