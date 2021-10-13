@@ -33,6 +33,7 @@
 
 //----------------ITERATION
 #include <iterator>
+#include <string_view>
 
 //----------------NAMESPACES
 using namespace std::chrono;
