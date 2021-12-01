@@ -5,7 +5,7 @@ CC = clang++
 CPPFLAGS = -std=c++17 -pthread -ggdb3 -pipe -O2 -Wall -Werror
 
 # COMPILED FILE NAME
-CMPFILENAME = 15-matrix-generate-sum
+CMPFILENAME = 18-no-execution
 
 CMPTESTRUNH = test_runner
 CMPPROFILEH = profile
