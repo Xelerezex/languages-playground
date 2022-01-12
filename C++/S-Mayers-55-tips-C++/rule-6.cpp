@@ -1,3 +1,4 @@
+// Rule #6
 // Explicitly forbid the compiler to generate functions
 // that you don't need
 
