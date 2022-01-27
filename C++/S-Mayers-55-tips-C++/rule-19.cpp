@@ -1,5 +1,5 @@
-// Rule 18
-// 
+// Rule #19
+// Consider class design as type design
 
 /*
 *   NO CODE
