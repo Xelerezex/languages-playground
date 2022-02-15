@@ -36,8 +36,11 @@
 #include <memory>
 #include <chrono>
 
-//----------------ASYNC
+//----------------FUNCTIONS
 #include <functional>
+
+//----------------ASYNC
+#include <shared_mutex>
 #include <future>
 #include <atomic>
 #include <mutex>
