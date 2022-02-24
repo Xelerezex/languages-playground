@@ -1,0 +1,3 @@
+/home/person/Документы/__repo__/languages-playground/C++/Art-Of-Development-C++/4-brown-belt/week-2/build/CMakeFiles/edit_cache.dir
+/home/person/Документы/__repo__/languages-playground/C++/Art-Of-Development-C++/4-brown-belt/week-2/build/CMakeFiles/rebuild_cache.dir
+/home/person/Документы/__repo__/languages-playground/C++/Art-Of-Development-C++/4-brown-belt/week-2/build/CMakeFiles/Example.dir

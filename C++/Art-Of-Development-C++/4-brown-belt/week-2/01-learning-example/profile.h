@@ -49,7 +49,7 @@ class TotalDuration
         {
             std::ostringstream os;
             os << message
-               << duration_cast<std::chrono::milliseconds>(value).count()
+               << std::chrono::duration_cast<std::chrono::milliseconds>(value).count()
                << " ms" << std::endl;
             std::cerr << os.str();
         }

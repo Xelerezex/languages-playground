@@ -1,0 +1,1 @@
+clang++   -std=c++17 -pthread -Og -ggdb3 -pipe -O2 -Wall -Werror -Wextra   CMakeFiles/Example.dir/01-learning-example.cpp.o CMakeFiles/Example.dir/xml.cpp.o CMakeFiles/Example.dir/json.cpp.o  -o Example 
