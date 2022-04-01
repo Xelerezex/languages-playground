@@ -7,8 +7,10 @@
 #    -DQt5Gui_DIR=/opt/QT/5.15.2/gcc_64/lib/cmake/Qt5Gui          \
 #    -DQt5Widgets_DIR=/opt/QT/5.15.2/gcc_64/lib/cmake/Qt5Widgets
 
+
 cmake_minimum_required(VERSION 3.16)
-project(first)
+project(TWin)
+
 
 set(CMAKE_CXX_COMPILER g++)
 set(CMAKE_CXX_STANDARD 17)
@@ -16,16 +18,29 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
 
-set(CMAKE_PREFIX_PATH "/opt/Qt")
 
-# find_package(Qt5Core REQUIRED)
-# find_package(Qt5Gui REQUIRED)
+set(CMAKE_PREFIX_PATH "/opt/Qt")
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
-set(SOURCE_FILE 00-qt-hello.cpp)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILE})
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-# target_link_libraries(${PROJECT_NAME} Qt5::Core)
-# target_link_libraries(${PROJECT_NAME} Qt5::Gui)
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
+
+add_library(${PROJECT_NAME}
+ 	SHARED
+  		01-two-windows.cpp
+  		counter.cpp
+		Counter.h
+)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})
+
+
+target_link_libraries(${PROJECT_NAME}
+	PUBLIC
+		Qt5::Widgets
+		Qt5::Core
+		Qt5::Gui
+)
