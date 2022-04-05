@@ -18,6 +18,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
 
+# Debug mode ON
+# -DCMAKE_BUILD_TYPE=Debug
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
+set(CMAKE_CXX_FLAGS_RELEASE_INIT "-Wall")
+
 
 set(CMAKE_PREFIX_PATH "/opt/Qt")
 find_package(Qt5Core REQUIRED)
@@ -27,7 +33,6 @@ find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 
 add_executable(${PROJECT_NAME}
 	tulip.cpp

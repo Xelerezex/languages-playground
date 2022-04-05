@@ -1,5 +1,7 @@
 #include <QtCore>
 #include <QtAlgorithms>
+#include <QDebug>
+#include <QtGlobal>
 #include <algorithm>
 
 int main()
@@ -86,5 +88,34 @@ int main()
         {
             qDebug() << "Element: " << str;
         }
+    }
+
+    qDebug() << "\n==================QT Strings===========================";
+    {
+        {
+            QString str = "Lo";
+            Q_ASSERT(str == "Lo");
+            Q_ASSERT(str != "LO");
+        }
+        {
+            QString str1 = "";
+            QString str2;
+            Q_ASSERT(str1.isNull() == false);
+            Q_ASSERT(str2.isNull() == true);
+        }
+        {
+            QString str1 = "Lo";
+            QString str2 = "stris";
+            qDebug() << str1 + str2;
+        }
+        {
+            QString str1 = QString::number(178.225858);;
+            qDebug() << str1 + " This is string";
+        }
+    }
+    qDebug() << "\n==================QT QVariant===========================";
+    {
+        QVariant v2(23.03d);
+        qDebug() << QVariant::typeToName(v2.type());
     }
 }
