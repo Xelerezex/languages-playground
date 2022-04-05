@@ -1,4 +1,4 @@
-#include "output.h"
+#include <output/output.h>
 
 int main()
 {
