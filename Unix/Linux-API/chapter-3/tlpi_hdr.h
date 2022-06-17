@@ -50,7 +50,7 @@
  * Declaration of our functions for processing numeric
  * arguments (getInt(), getLong())
  */
-#include "get_num.h"
+// #include "get_num.h"
 /**
  * @def     #include "get_num.h"
  * @brief   Non-standart file.

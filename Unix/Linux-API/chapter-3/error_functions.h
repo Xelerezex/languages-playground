@@ -25,7 +25,7 @@ void errMsg(const char *format, ...);
  * @def     __GNUC__
  * @brief   These macros are defined that compiler are GNU.
  */
-#ifndef __GNUC__
+#ifdef __GNUC__
     /**
      * @def     __GNUC__
      * @brief   This macro blocks compiler warnings when using 'gcc -Wall' commands.
