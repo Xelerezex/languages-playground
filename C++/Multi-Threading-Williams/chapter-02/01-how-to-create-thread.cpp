@@ -35,7 +35,7 @@ int main()
     std::thread t2{Class()};
     t2.join();
 
-    // with lambda
+    // with lambda function
     std::thread t3([&] () {
         do_job();
         do_another_job();
