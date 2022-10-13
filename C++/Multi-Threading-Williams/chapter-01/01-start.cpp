@@ -9,7 +9,7 @@ void hello()
 int main()
 {
     std::thread t(hello);
-    t.join();
+    t.join();               // Waits until thread ends
 
     return 0;
 }
