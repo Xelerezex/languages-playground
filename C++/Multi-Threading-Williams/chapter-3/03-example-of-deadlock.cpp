@@ -11,10 +11,10 @@ public:
     friend void swap (some_big_object& lhs, some_big_object& rhs);
 };
 
-    void swap (some_big_object& lhs, some_big_object& rhs)
-    {
-        lhs.inner = rhs.inner;
-    }
+void swap (some_big_object& lhs, some_big_object& rhs)
+{
+    lhs.inner = rhs.inner;
+}
 
 class X
 {
@@ -27,13 +27,12 @@ public:
         : some_detail(sd)
     {}
 
-
     friend void swap (X& lhs, X& rhs);
 };
 
 void swap (X& lhs, X& rhs)
 {
-    if (&lhs==&rhs)
+    if (&lhs == &rhs)
     {
         return;
     }
