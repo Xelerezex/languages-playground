@@ -27,6 +27,8 @@ public:
         : some_detail(sd)
     {}
 
+    // https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom#3279550
+    // https://stackoverflow.com/questions/5695548/public-friend-swap-member-function
     friend void swap (X& lhs, X& rhs);
 };
 
