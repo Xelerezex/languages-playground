@@ -28,21 +28,23 @@ public:
     }
 
     // Assignment operator
-    wrapper& operator= (const wrapper& other)
+    wrapper& operator= (wrapper& other)
     {
-        if (this != &other)
-        {
-            // Delete all old data
-            delete [] m_pArray;
-            m_pArray = nullptr;
-
-            m_sSize = other.m_sSize;
-            m_pArray = m_sSize ? new int[m_sSize] : nullptr;
-            std::copy(other.m_pArray, other.m_pArray + m_sSize, m_pArray);
-        }
+        swap(*this, other);
 
         std::cerr << "Called Assignment operator for object: " << this << std::endl;
         return *this;
+    }
+
+    friend void swap(wrapper& first, wrapper& second) // Nothrow
+    {
+        // enable ADL (not necessary in our case, but good practice)
+        using std::swap;
+
+        // By swapping the members of two objects,
+        // the two objects are effectively swapped
+        swap(first.m_sSize, second.m_sSize);
+        swap(first.m_pArray, second.m_pArray);
     }
 
     // Destructor
