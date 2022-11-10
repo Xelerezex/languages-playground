@@ -28,7 +28,7 @@ public:
     }
 
     // Assignment operator
-    wrapper& operator= (wrapper& other)
+    wrapper& operator= (wrapper other)
     {
         swap(*this, other);
 
