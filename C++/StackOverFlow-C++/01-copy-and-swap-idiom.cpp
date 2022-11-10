@@ -12,7 +12,8 @@ public:
         : m_sSize{size}
         , m_pArray{m_sSize ? new int[m_sSize]() : nullptr}
     {
-        std::cerr << "Called Default constructor for object: " << this << std::endl;
+        std::cerr << "Called Default constructor for object: " << this
+                  << " and size: "<< m_sSize <<  std::endl;
     }
 
     // Copy constructor
@@ -27,10 +28,19 @@ public:
         std::cerr << "Called Copy constructor for object: " << this << std::endl;
     }
 
-    // Assignment operator
-    wrapper& operator= (wrapper other)
+    // Move constructor
+    wrapper(wrapper&& other) noexcept
     {
         swap(*this, other);
+        std::cerr << "Called Move constructor for object: " << this
+                  << " and size: "<< m_sSize <<  std::endl;
+    }
+
+    // Assignment operator
+    wrapper& operator= (const wrapper& other)
+    {
+        wrapper temporary(other);
+        swap(*this, temporary);
 
         std::cerr << "Called Assignment operator for object: " << this << std::endl;
         return *this;
@@ -62,8 +72,10 @@ private:
 int main()
 {
     wrapper first(7);
-    wrapper second(first);
-    wrapper third;
+    //wrapper second(first);
+    //wrapper third;
 
-    third = second;
+    //third = second;
+
+    wrapper fourth(std::move(first));
 }
