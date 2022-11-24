@@ -1,45 +1,89 @@
+#include <mutex>
+#include <condition_variable>
+#include <queue>
 #include <memory>
+#include <thread>
 
 template <typename T>
 class threadsafe_queue
 {
 public:
-        treadsafe_queue();
-        treadsafe_queue(const treadsafe_queue&);
-        treadsafe_queue& operator=(const treadsafe_queue&) = delete;
+        threadsafe_queue()
+        {
+        }
+
+        threadsafe_queue(const threadsafe_queue& other)
+        {
+            std::lock_guard<std::mutex> lock(other.internal_mutex);
+            data_queue = other.data_queue;
+        }
+
+        threadsafe_queue& operator=(const threadsafe_queue&) = delete;
 
         /**********************************************************************/
         void push(T new_value)
         {
-                std::lock_guard<std::mutex> lock(mut);
-                data_queue.push(new_value);
-                data_cond.notify_one();
+            std::lock_guard<std::mutex> lock(internal_mutex);
+            data_queue.push(new_value);
+            data_cond.notify_one();
         }
         /**********************************************************************/
 
         /**********************************************************************/
-        bool try_pop(T& value);
-        std::shared_ptr<T> try_pop();
+        bool try_pop(T& value)
+        {
+            std::lock_guard<std::mutex> lock(internal_mutex);
+            if (data_queue.empty())
+            {
+                return false;
+            }
+            value = data_queue.front();
+            data_queue.pop();
+            return true;
+        }
+
+        std::shared_ptr<T> try_pop()
+        {
+            std::lock_guard<std::mutex> lock(internal_mutex);
+            if (data_queue.empty())
+            {
+                return std::shared_ptr<T>{};
+            }
+            std::shared_ptr<T> result(std::make_shared<T>(data_queue.front()));
+            data_queue.pop();
+            return result;
+        }
         /**********************************************************************/
 
         /**********************************************************************/
         void wait_and_pop(T& value)
         {
-                std::unique_lock<std::mutex> lock(mut);
-                data_cond.wait(lock, [this] { return !data_queue.empty(); });
-                value = data_queue.front();
-                data_queue.pop();
+            std::unique_lock<std::mutex> lock(internal_mutex);
+            data_cond.wait(lock, [this] { return !data_queue.empty(); });
+            value = data_queue.front();
+            data_queue.pop();
         }
 
-        std::shared_ptr<T> wait_and_pop();
+        std::shared_ptr<T> wait_and_pop()
+        {
+            std::unique_lock<std::mutex> lock(internal_mutex);
+            data_cond.wait(lock, [this]{ return !data_queue.empty(); });
+            std::shared_ptr<T> result(std::make_shared<T>(data_queue.front()));
+            data_queue.pop();
+            return result;
+        }
         /**********************************************************************/
 
         /**********************************************************************/
-        bool empty() const;
+        bool empty() const
+        {
+            std::lock_guard<std::mutex> lock(internal_mutex);
+            return data_queue.empty();
+        }
         /**********************************************************************/
 
 private:
-        std::mutex mut;
+        mutable std::mutex internal_mutex;
         std::queue<T> data_queue;
         std::condition_variable data_cond;
 };
@@ -92,7 +136,6 @@ void data_processing_thread()
 
 int main()
 {
-
     std::thread t1(data_preparation_thread);
     std::thread t2(data_processing_thread);
 
